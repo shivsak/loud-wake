@@ -1,0 +1,80 @@
+name: LoudWake
+options:
+  bundleIdPrefix: com.loudwake
+  deploymentTarget:
+    iOS: "26.0"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    DEVELOPMENT_TEAM: "KXH5NHDND9"
+    CODE_SIGN_STYLE: Automatic
+    SWIFT_STRICT_CONCURRENCY: complete
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+
+schemes:
+  LoudWake:
+    build:
+      targets:
+        LoudWake: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+    archive:
+      config: Release
+
+targets:
+  LoudWake:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources
+    info:
+      path: Sources/Info.plist
+      properties:
+        CFBundleDisplayName: LoudWake
+        UILaunchScreen: {}
+        UIBackgroundModes:
+          - audio
+        NSAlarmKitUsageDescription: "LoudWake schedules alarms that wake you reliably, even in silent mode."
+        NSMotionUsageDescription: "LoudWake uses motion to verify shake and step wake-up challenges."
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        UIUserInterfaceStyle: Dark
+    entitlements:
+      path: Sources/LoudWake.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.loudwake.shared
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.loudwake.app
+        INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
+    dependencies:
+      - target: LoudWakeWidget
+
+  LoudWakeWidget:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: Widget
+      # Shared model needed to render the AlarmKit Live Activity.
+      - path: Sources/Alarm/WakeMetadata.swift
+    info:
+      path: Widget/Info.plist
+      properties:
+        CFBundleDisplayName: LoudWake
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    entitlements:
+      path: Widget/LoudWakeWidget.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.loudwake.shared
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.loudwake.app.widget
