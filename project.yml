@@ -42,6 +42,7 @@ targets:
           - audio
         NSAlarmKitUsageDescription: "LoudWake schedules alarms that wake you reliably, even in silent mode."
         NSMotionUsageDescription: "LoudWake uses motion to verify shake and step wake-up challenges."
+        ITSAppUsesNonExemptEncryption: false
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
         UIUserInterfaceStyle: Dark
