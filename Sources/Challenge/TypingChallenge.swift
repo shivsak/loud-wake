@@ -3,6 +3,7 @@ import SwiftUI
 struct TypingChallengeView: View {
     let difficulty: Difficulty
     let onPass: () -> Void
+    var autofocus: Bool = true
 
     @State private var target = ""
     @State private var entry = ""
@@ -48,7 +49,7 @@ struct TypingChallengeView: View {
         }
         .onAppear {
             target = Self.phrases[difficulty]?.randomElement() ?? "I am awake now"
-            focused = true
+            focused = autofocus
         }
         .onChange(of: entry) { _, _ in
             guard matches, !passed else { return }

@@ -18,6 +18,15 @@ final class AlarmStore {
         load()
     }
 
+    #if DEBUG
+    /// In-memory store with fixed alarms for previews/screenshots — no file I/O, no scheduling.
+    init(previewAlarms: [Alarm]) {
+        self.scheduler = AlarmScheduler()
+        self.fileURL = AppGroup.containerURL.appendingPathComponent("preview-unused.json")
+        self.alarms = previewAlarms
+    }
+    #endif
+
     // MARK: - Mutations
 
     func add(_ alarm: Alarm) {

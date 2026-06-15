@@ -8,25 +8,37 @@ struct LoudWakeApp: App {
 
     var body: some Scene {
         WindowGroup {
-            RootView()
-                .environment(store)
-                .environment(engine)
-                .preferredColorScheme(.dark)
-                .tint(Theme.accent)
-                .task {
-                    store.resync()
-                    engine.start(store: store)
-                }
-                // Present the blocking challenge whenever an alarm is firing.
-                .fullScreenCover(item: $engine.firingAlarmID) { id in
-                    RingingView(alarmID: id)
-                        .environment(store)
-                        .environment(engine)
-                }
-                .onChange(of: scenePhase) { _, phase in
-                    if phase == .active { engine.refresh() }
-                }
+            #if DEBUG
+            if let screen = ProcessInfo.processInfo.environment["SCREENSHOT"] {
+                ScreenshotHarness(screen: screen)
+            } else {
+                mainContent
+            }
+            #else
+            mainContent
+            #endif
         }
+    }
+
+    private var mainContent: some View {
+        RootView()
+            .environment(store)
+            .environment(engine)
+            .preferredColorScheme(.dark)
+            .tint(Theme.accent)
+            .task {
+                store.resync()
+                engine.start(store: store)
+            }
+            // Present the blocking challenge whenever an alarm is firing.
+            .fullScreenCover(item: $engine.firingAlarmID) { id in
+                RingingView(alarmID: id)
+                    .environment(store)
+                    .environment(engine)
+            }
+            .onChange(of: scenePhase) { _, phase in
+                if phase == .active { engine.refresh() }
+            }
     }
 }
 

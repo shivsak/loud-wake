@@ -72,7 +72,7 @@ struct RingingView: View {
 }
 
 /// A brief, warm confirmation after the alarm is beaten.
-private struct SuccessView: View {
+struct SuccessView: View {
     @State private var appeared = false
 
     var body: some View {
