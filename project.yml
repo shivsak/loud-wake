@@ -9,7 +9,10 @@ settings:
   base:
     SWIFT_VERSION: "6.0"
     MARKETING_VERSION: "1.0"
-    CURRENT_PROJECT_VERSION: "1"
+    CURRENT_PROJECT_VERSION: "2"
+    # iPhone-only (1). Universal would require supporting all iPad orientations;
+    # LoudWake is portrait-only by design.
+    TARGETED_DEVICE_FAMILY: "1"
     DEVELOPMENT_TEAM: "KXH5NHDND9"
     CODE_SIGN_STYLE: Automatic
     SWIFT_STRICT_CONCURRENCY: complete
@@ -37,6 +40,8 @@ targets:
       path: Sources/Info.plist
       properties:
         CFBundleDisplayName: LoudWake
+        CFBundleShortVersionString: "$(MARKETING_VERSION)"
+        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
         UILaunchScreen: {}
         UIBackgroundModes:
           - audio
@@ -55,6 +60,7 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.loudwake.app
         INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
+        TARGETED_DEVICE_FAMILY: "1"   # iPhone-only (overrides xcodegen's universal default)
     dependencies:
       - target: LoudWakeWidget
 
@@ -69,6 +75,8 @@ targets:
       path: Widget/Info.plist
       properties:
         CFBundleDisplayName: LoudWake
+        CFBundleShortVersionString: "$(MARKETING_VERSION)"
+        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
     entitlements:
@@ -79,3 +87,4 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.loudwake.app.widget
+        TARGETED_DEVICE_FAMILY: "1"
