@@ -1,6 +1,11 @@
 # App Store screenshots
 
-6.9" iPhone (iPhone 17 Pro Max), **1320 × 2868** — the size App Store Connect requires.
+Two sets, so you can fill whichever slot App Store Connect shows:
+
+- **`./` (root): 1320 × 2868** — 6.9" iPhone slot (the primary required size).
+- **`6.5-inch/`: 1284 × 2778** — 6.5" iPhone slot (optional; use if ASC asks for it).
+
+Upload the 6.9" set first; only use the 6.5" set if that slot is required/shown.
 
 Suggested upload order:
 1. `01-math.png` — the core idea: solve to wake up
